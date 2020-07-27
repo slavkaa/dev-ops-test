@@ -19,4 +19,6 @@ RUN cd /home/ubuntu/build && git clone https://github.com/boxfuse/boxfuse-sample
 RUN cd /home/ubuntu/build/boxfuse-sample-java-war-hello && mvn package
 RUN cp /home/ubuntu/build/boxfuse-sample-java-war-hello/target/hello-1.0.war /opt/tomcat/webapps/hello.war
 
+EXPOSE 8080
+
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
