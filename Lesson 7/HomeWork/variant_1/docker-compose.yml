@@ -1,0 +1,18 @@
+version: '2'
+services:
+  stage: 
+    build: stage
+    volumes:
+      - webapps:/opt/tomcat/webapps
+
+  prod:
+    build: prod
+    volumes:
+      - webapps:/opt/tomcat/webapps
+    volumes_from:
+      - stage
+    ports:
+      - "8080:8080"
+
+volumes:
+  webapps:
