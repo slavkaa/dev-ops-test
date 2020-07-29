@@ -1,0 +1,13 @@
+docker-compose build --force-rm --no-cache
+
+docker-compose up -d
+
+docker exec -it <container name> /bin/bash
+docker ps
+docker exec -it e620f4a2b5b4 /bin/bash
+
+cd /opt/tomcat/webapps-tmp
+
+docker-compose stop
+
+docker ps

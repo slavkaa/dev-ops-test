@@ -1,0 +1,21 @@
+version: '2'
+services:
+  stage: 
+    build: stage
+    volumes:
+      - tomcat:/opt/tomcat
+#    ports:
+#      - "8080:8080"
+
+
+  prod:
+    build: prod
+    volumes:
+      - tomcat:/opt/tomcat
+    volumes_from:
+      - stage
+    ports:
+      - "8080:8080"
+
+volumes:
+  tomcat:
