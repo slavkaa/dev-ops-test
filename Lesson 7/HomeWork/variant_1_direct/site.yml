@@ -20,33 +20,6 @@
       apt:
         name: git
         state: present
-# https://docs.ansible.com/ansible/latest/modules/group_module.html
-#    -
-#      name: "Ensure tomcat group is present"
-#      group:
-#        name: tomcat
-#        state: present
-#    -
-#      name: "Ensure user tomcat is present"
-#      user:
-#        name: tomcat
-#        shell: /bin/false
-#        groups: ['tomcat']
-#        home: /opt/tomcat
-#    -
-#      name: "Ensure directory /opt/tomcat/webapps present"
-#      file:
-#        group: 'tomcat'
-#        owner: 'tomcat'
-#        path: /opt/tomcat/webapps
-#        state: directory
-#    -
-#      name: "Ensure directory /opt/tomcat owned by tomcat group"
-#      file:
-#        path: /opt/tomcat
-#        owner: 'tomcat'
-#        group: 'tomcat'
-#        state: directory
     -
       name: "Ensure directory /home/ubuntu/build/ present"
       file:
