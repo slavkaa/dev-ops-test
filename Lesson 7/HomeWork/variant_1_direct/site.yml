@@ -1,0 +1,98 @@
+--- 
+- 
+  name: "Setup stage"
+  become: true
+  hosts: stage
+  tasks: 
+    -
+      name: "Ensure default-jdk package is present"
+      apt:
+        name: default-jdk
+        update_cache: yes
+        state: present
+    -
+      name: "Ensure maven package is present"
+      apt:
+        name: maven
+        state: present
+    -
+      name: "Ensure git package is present"
+      apt:
+        name: git
+        state: present
+# https://docs.ansible.com/ansible/latest/modules/group_module.html
+#    -
+#      name: "Ensure tomcat group is present"
+#      group:
+#        name: tomcat
+#        state: present
+#    -
+#      name: "Ensure user tomcat is present"
+#      user:
+#        name: tomcat
+#        shell: /bin/false
+#        groups: ['tomcat']
+#        home: /opt/tomcat
+#    -
+#      name: "Ensure directory /opt/tomcat/webapps present"
+#      file:
+#        group: 'tomcat'
+#        owner: 'tomcat'
+#        path: /opt/tomcat/webapps
+#        state: directory
+#    -
+#      name: "Ensure directory /opt/tomcat owned by tomcat group"
+#      file:
+#        path: /opt/tomcat
+#        owner: 'tomcat'
+#        group: 'tomcat'
+#        state: directory
+    -
+      name: "Ensure directory /home/ubuntu/build/ present"
+      file:
+        path: /home/ubuntu/build/
+        state: directory
+    -
+      name: "Ensure project files downloaded from git"
+      git:
+        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+        dest: /home/ubuntu/build
+        clone: yes
+    -
+      name: "Ensure maven compile project"
+      command: mvn -f /home/ubuntu/build/pom.xml clean package
+    -
+      name: "Ensure tomcat8 package is present"
+      fetch:
+        method: pull
+        src: /home/ubuntu/build/target/hello-1.0.war
+        dest: /tmp/
+        flat: yes
+
+-
+  name: "Setup prod"
+  become: true
+  hosts: prod
+  tasks:
+    -
+      name: "Ensure default-jdk package is present"
+      apt:
+        name: default-jdk
+        update_cache: yes
+        state: present
+    -
+      name: "Ensure tomcat8 package is present"
+      apt:
+        name: tomcat8
+        update_cache: yes
+        state: present
+    -
+      name: "Ensure tmp java application is present"
+      copy:
+        src: /tmp/hello-1.0.war
+        dest: /var/lib/tomcat8/webapps
+    -
+      name: "Ensure tomcat8  service is started"
+      service:
+        name: tomcat8
+        state: restarted
