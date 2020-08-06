@@ -1,0 +1,6 @@
+version: '2'
+services:
+  stage: 
+    build: stage
+    volumes:
+      - /tmp:/opt/tomcat

@@ -1,0 +1,11 @@
+docker build -t tomcat8_v70 .
+docker run -d -p 8080:8080 tomcat8_v70
+docker run -d --entrypoint=/bin/sh -p 8080:8080 tomcat8_v50
+docker run -i -t -p 8080:8080 tomcat8_v64 /bin/bash
+
+docker run -d -p 8080:8080 tomcat8_v38 service tomcat8 start
+
+docker start ea97ef30e189 --cap-add SYS_PTRACE
+
+docker ps -a
+docker logs
